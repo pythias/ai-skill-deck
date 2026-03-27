@@ -1,0 +1,49 @@
+.DS_Store
+.swiftpm/
+.build/
+xcuserdata/
+*.xcuserstate
+*.userasup
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+DerivedData/
+.build/
+Packages/
+*.xcodeproj
+*.xcworkspace
+!default.xcworkspace
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+# Xcode
+xcuserdata/
+*.xcuserdatad/
+*.moved-aside
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Packages/
+*.xcodeproj
+*.xcworkspace
+
+# Build products
+*.app
+*.appex
+*.dSYM
+*.o
+*.a
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
