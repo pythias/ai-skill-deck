@@ -21,23 +21,48 @@ jobs:
       - name: Show Swift version
         run: swift --version
 
-      - name: Generate Xcode Project
-        run: swift package generate-xcodeproj
+      - name: Build Release
+        run: swift build -c release
 
-      - name: Build Archive
+      - name: Create App Bundle
         run: |
-          xcodebuild archive \
-            -project SkillDeck.xcodeproj \
-            -scheme SkillDeck \
-            -configuration Release \
-            -archivePath ./build/SkillDeck.xcarchive \
-            -destination 'generic/platform=macOS' \
-            SKIP_INSTALL=NO
+          mkdir -p ./build/SkillDeck.app/Contents/MacOS
+          mkdir -p ./build/SkillDeck.app/Contents/Resources
+
+          # Copy executable
+          cp ./.build/release/SkillDeck ./build/SkillDeck.app/Contents/MacOS/
+
+          # Copy Resources if exists
+          if [ -d "./Sources/SkillDeck/Resources" ]; then
+            cp -R ./Sources/SkillDeck/Resources/* ./build/SkillDeck.app/Contents/Resources/
+          fi
+
+          # Create Info.plist
+          cat > ./build/SkillDeck.app/Contents/Info.plist << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>CFBundleExecutable</key>
+            <string>SkillDeck</string>
+            <key>CFBundleIdentifier</key>
+            <string>com skilldeck.app</string>
+            <key>CFBundleName</key>
+            <string>SkillDeck</string>
+            <key>CFBundlePackageType</key>
+            <string>APPL</string>
+            <key>CFBundleShortVersionString</key>
+            <string>${{ github.ref_name }}</string>
+            <key>CFBundleVersion</key>
+            <string>1</string>
+          </dict>
+          </plist>
+          EOF
 
       - name: Create DMG
         run: |
           hdiutil create -volname SkillDeck \
-            -srcfolder ./build/SkillDeck.xcarchive/Products/Applications/SkillDeck.app \
+            -srcfolder ./build/SkillDeck.app \
             -ov \
             -format UDZO \
             ./build/SkillDeck.dmg
@@ -49,7 +74,7 @@ jobs:
 
       - name: Create Zip
         run: |
-          zip -r ./build/SkillDeck-macOS.zip ./build/SkillDeck.xcarchive
+          zip -r ./build/SkillDeck-macOS.zip ./build/SkillDeck.app
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
