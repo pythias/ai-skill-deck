@@ -48,7 +48,7 @@ jobs:
             <key>CFBundleExecutable</key>
             <string>SkillDeck</string>
             <key>CFBundleIdentifier</key>
-            <string>com skilldeck.app</string>
+            <string>com.skilldeck.app</string>
             <key>CFBundleName</key>
             <string>SkillDeck</string>
             <key>CFBundlePackageType</key>
@@ -60,6 +60,10 @@ jobs:
           </dict>
           </plist>
           EOF
+
+      - name: Ad-hoc Sign App
+        run: |
+          codesign -s - ./build/SkillDeck.app
 
       - name: Create DMG
         run: |
