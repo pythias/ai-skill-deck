@@ -33,7 +33,7 @@ jobs:
       - name: Create DMG
         run: |
           hdiutil create -volname SkillDeck \
-            -srcfolder ./build/SkillDeck.app \
+            -srcfolder ./build/SkillDeck.xcarchive/Products/Applications/SkillDeck.app \
             -ov \
             -format UDZO \
             ./build/SkillDeck.dmg
