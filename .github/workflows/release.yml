@@ -69,7 +69,7 @@ jobs:
 
       - name: Generate Checksums
         run: |
-          sha256sum ./build/SkillDeck.dmg > ./build/SkillDeck.dmg.sha256
+          shasum -a 256 ./build/SkillDeck.dmg > ./build/SkillDeck.dmg.sha256
           cat ./build/SkillDeck.dmg.sha256
 
       - name: Create Zip
