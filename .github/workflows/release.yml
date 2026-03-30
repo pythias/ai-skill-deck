@@ -8,11 +8,6 @@ on:
 jobs:
   build:
     runs-on: macos-14
-    strategy:
-      matrix:
-        include:
-          - platform: macOS
-            arch: universal
 
     steps:
       - uses: actions/checkout@v4
@@ -37,8 +32,6 @@ jobs:
 
       - name: Create DMG
         run: |
-          # Create Applications symlink for DMG
-          mkdir -p ./build/SkillDeck.app/Contents/Resources
           hdiutil create -volname SkillDeck \
             -srcfolder ./build/SkillDeck.app \
             -ov \
@@ -50,7 +43,7 @@ jobs:
           sha256sum ./build/SkillDeck.dmg > ./build/SkillDeck.dmg.sha256
           cat ./build/SkillDeck.dmg.sha256
 
-      - name: Create Archive
+      - name: Create Zip
         run: |
           zip -r ./build/SkillDeck-macOS.zip ./build/SkillDeck.xcarchive
 

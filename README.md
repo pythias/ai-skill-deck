@@ -26,6 +26,19 @@ A macOS app for managing AI agent skills across multiple platforms including Ope
 
 ## Installation
 
+### Download DMG (Recommended)
+
+1. Go to [Releases](https://github.com/pythias/ai-skill-deck/releases)
+2. Download the latest `SkillDeck-macOS.dmg`
+3. Open the DMG and drag SkillDeck.app to Applications
+
+### Homebrew Tap
+
+```bash
+brew tap pythias/tap
+brew install --cask skilldeck
+```
+
 ### Build from Source
 
 ```bash
